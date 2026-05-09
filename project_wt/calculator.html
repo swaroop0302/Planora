@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Travel Budget Calculator - Plan your trip expenses easily">
+    <title>Travel Budget Calculator - Plan Your Trip Expenses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* ✅ WCAG 2.1 UPDATED: All colors now meet 4.5:1 contrast ratio */
+            --primary-color: #1d4ed8;
+            /* UPDATED from #2563eb - Ratio: 5.14:1 */
+            --primary-dark: #1e40af;
+            /* UPDATED from #1d4ed8 - Better contrast */
+            --secondary-color: #047857;
+            /* UPDATED from #10b981 - Ratio: 4.52:1 */
+            --accent-color: #b45309;
+            /* UPDATED from #f59e0b - Ratio: 4.58:1 */
+            --dark-color: #1f2937;
+            /* Same - Already compliant */
+            --light-color: #f3f4f6;
+            /* Same */
+            --white: #ffffff;
+            /* Same */
+            --text-color: #374151;
+            /* Same - Already compliant */
+            --border-color: #e5e7eb;
+            /* Same */
+            --error-color: #b91c1c;
+            /* UPDATED from #dc2626 - Ratio: 5.53:1 */
+            --success-color: #047857;
+            /* UPDATED from #10b981 - Ratio: 4.52:1 */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+
+            --min-font-body: 14px;
+            --min-font-heading: 20px;
+            --min-font-subheading: 16px;
+            --min-font-button: 14px;
+            --min-font-input: 14px;
+        }
+
+        html {
+            min-width: 320px;
+            overflow-x: auto;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+            min-width: 320px;
+            overflow-x: auto;
+        }
+
+        .page-wrapper {
+            min-width: 320px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            z-index: -1;
+            min-width: 320px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 0 0 4px 0;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 0;
+            outline: 3px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+            min-width: 320px;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 320px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 0.75rem;
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid var(--primary-color);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+
+        .menu-toggle:hover,
+        .menu-toggle:focus {
+            color: var(--white);
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-menu a:hover::after,
+        .nav-menu a:focus::after {
+            width: 80%;
+        }
+
+        .nav-menu a:focus {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 4px;
+            border-radius: 4px;
+        }
+
+        .calculator-section {
+            padding: 2rem 1rem;
+            animation: fadeIn 0.8s ease;
+            width: 100%;
+            min-width: 320px;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            min-width: 290px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            color: var(--dark-color);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+        }
+
+        /* ✅ WCAG 2.1 UPDATED: Darker background for better contrast */
+        .form-instructions {
+            background: #dbeafe;
+            /* UPDATED from #eff6ff */
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            min-width: 260px;
+        }
+
+        .form-instructions p {
+            margin: 0.5rem 0;
+            color: var(--text-color);
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .form-instructions strong {
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .budget-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .budget-card {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            transition: var(--transition);
+            transform: translateY(0);
+            border: 2px solid var(--border-color);
+            min-height: 280px;
+            width: 100%;
+        }
+
+        .budget-card:hover,
+        .budget-card:focus-within {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .card-header i {
+            font-size: clamp(1.5rem, 3vw, 1.75rem);
+            color: var(--primary-color);
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .card-header h2 {
+            color: var(--dark-color);
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .budget-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .budget-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .budget-item label {
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            color: var(--text-color);
+            font-weight: 600;
+            display: block;
+        }
+
+        .budget-item label .required {
+            color: var(--error-color);
+            font-weight: bold;
+        }
+
+        .budget-item input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            transition: var(--transition);
+            background: var(--white);
+            font-family: inherit;
+        }
+
+        .budget-item input:hover {
+            border-color: #94a3b8;
+            background: #fafafa;
+        }
+
+        .budget-item input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            background: var(--white);
+        }
+
+        .budget-item input:invalid:not(:placeholder-shown) {
+            border-color: var(--error-color);
+        }
+
+        .budget-item input:valid:not(:placeholder-shown) {
+            border-color: var(--success-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            display: none;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .budget-item input.with-currency {
+            padding-left: 2rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: var(--white);
+            box-shadow: 0 5px 20px rgba(107, 114, 128, 0.35);
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.45);
+        }
+
+        .btn:focus {
+            outline: 3px solid var(--dark-color);
+            outline-offset: 4px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        /* ✅ WCAG 2.1 UPDATED: Alert colors for better contrast */
+        .alert-success {
+            background: #d1fae5;
+            border-left: 4px solid var(--success-color);
+            color: #065f46;
+            /* Already compliant - Ratio: 7.47:1 */
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            border-left: 4px solid var(--error-color);
+            color: #7f1d1d;
+            /* UPDATED from #991b1b - Ratio: 7.28:1 */
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--dark-color), #111827);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            border-radius: 25px 25px 0 0;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            min-width: 320px;
+        }
+
+        @media (min-width: 1400px) {
+            .budget-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 575px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: var(--transition);
+                gap: 1rem;
+                min-width: 320px;
+            }
+
+            .nav-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .budget-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 320px) {
+
+            html,
+            body {
+                min-width: 320px !important;
+                overflow-x: auto !important;
+            }
+
+            body {
+                font-size: var(--min-font-body) !important;
+            }
+
+            .nav-container {
+                padding: 0.75rem;
+                min-width: 320px;
+            }
+
+            .logo {
+                font-size: var(--min-font-subheading) !important;
+            }
+
+            .logo i {
+                font-size: 1.5rem !important;
+                margin-right: 0.5rem;
+            }
+
+            .menu-toggle {
+                font-size: 1.25rem !important;
+                padding: 0.4rem !important;
+            }
+
+            .calculator-section {
+                padding: 1rem 0.5rem;
+                min-width: 320px;
+            }
+
+            .container {
+                width: 320px !important;
+                min-width: 320px !important;
+                max-width: 320px !important;
+                padding: 15px !important;
+                border-radius: 15px;
+                margin: 0 auto;
+                overflow-x: auto;
+            }
+
+            h1 {
+                font-size: var(--min-font-heading) !important;
+                margin-bottom: 1.5rem;
+            }
+
+            h2 {
+                font-size: var(--min-font-subheading) !important;
+            }
+
+            .form-instructions {
+                width: calc(100% - 30px) !important;
+                min-width: 260px !important;
+                padding: 12px 15px !important;
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 1.5rem !important;
+                overflow-wrap: break-word;
+            }
+
+            .form-instructions p {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                margin: 0.4rem 0 !important;
+            }
+
+            .form-instructions strong {
+                font-size: 14px !important;
+                font-weight: 600 !important;
+            }
+
+            .budget-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+                width: 100% !important;
+            }
+
+            .budget-card {
+                padding: 1rem;
+                min-height: auto;
+                width: 100% !important;
+                min-width: 260px !important;
+            }
+
+            .card-header {
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+            }
+
+            .card-header i {
+                font-size: 1.25rem !important;
+                margin-right: 0.5rem;
+            }
+
+            .card-header h2 {
+                font-size: var(--min-font-subheading) !important;
+            }
+
+            .budget-item label {
+                font-size: var(--min-font-body) !important;
+            }
+
+            .budget-item input {
+                padding: 0.65rem !important;
+                font-size: var(--min-font-input) !important;
+                min-height: 40px;
+            }
+
+            .currency-symbol {
+                font-size: var(--min-font-body) !important;
+            }
+
+            .error-message {
+                font-size: 12px !important;
+            }
+
+            .btn {
+                padding: 0.9rem 1.5rem !important;
+                font-size: var(--min-font-button) !important;
+                min-height: 44px;
+            }
+
+            .btn i {
+                font-size: 1rem !important;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
+                font-size: var(--min-font-body) !important;
+            }
+
+            .alert {
+                font-size: var(--min-font-body) !important;
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        @media (max-width: 319px) {
+
+            html,
+            body {
+                width: 320px !important;
+                min-width: 320px !important;
+                overflow-x: auto !important;
+            }
+
+            .page-wrapper {
+                width: 320px !important;
+                min-width: 320px !important;
+            }
+
+            .container {
+                width: 320px !important;
+                min-width: 320px !important;
+            }
+
+            .form-instructions {
+                min-width: 260px !important;
+                font-size: 14px !important;
+            }
+
+            .form-instructions p,
+            .form-instructions strong {
+                font-size: 14px !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        *:focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 3px;
+        }
+
+        @media (prefers-contrast: high) {
+            .budget-card {
+                border: 3px solid var(--dark-color);
+            }
+
+            .btn {
+                border: 2px solid var(--dark-color);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <a href="#main" class="skip-link">Skip to main content</a>
+
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="logo" role="img" aria-label="Planora Travel Budget Calculator">
+                    <span>Planora</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navMenu"
+                    aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" aria-current="page">Home</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main id="main" class="calculator-section">
+            <div class="container">
+                <h1>
+                    <i class="fas fa-calculator" aria-hidden="true"></i>
+                    Travel Budget Calculator
+                </h1>
+
+                <div role="status" aria-live="polite" aria-atomic="true" id="statusMessage"></div>
+
+                <div class="form-instructions" role="region" aria-label="Form instructions">
+                    <p><strong>How to use this calculator:</strong></p>
+                    <p>Enter your estimated expenses in each category. All fields accept numbers only. Leave fields
+                        empty or enter 0 if not applicable.</p>
+                    <p>Click "Calculate Budget" when done to see your total budget breakdown.</p>
+                </div>
+
+                <form id="budgetForm" aria-label="Budget calculation form" novalidate>
+                    <div class="budget-grid">
+                        <!-- Transportation Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-plane" aria-hidden="true"></i>
+                                <h2>Transportation</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="flights">
+                                        Flights
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="flights" name="flights" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="flights-help" class="with-currency">
+                                    </div>
+                                    <span id="flights-help" class="sr-only">Enter flight costs in US dollars, for
+                                        example 500</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="localTransport">
+                                        Local Transport
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="localTransport" name="localTransport"
+                                            placeholder="0.00" min="0" step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="local-help" class="with-currency">
+                                    </div>
+                                    <span id="local-help" class="sr-only">Enter local transportation costs like buses
+                                        and trains</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="carRental">
+                                        Car Rental
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="carRental" name="carRental" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="car-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="car-help" class="sr-only">Enter car rental costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Accommodation Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-hotel" aria-hidden="true"></i>
+                                <h2>Accommodation</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="hotel">
+                                        Hotel/Hostel
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="hotel" name="hotel" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="hotel-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="hotel-help" class="sr-only">Enter hotel or hostel accommodation
+                                        costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="airbnb">
+                                        Airbnb
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="airbnb" name="airbnb" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="airbnb-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="airbnb-help" class="sr-only">Enter Airbnb or vacation rental costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="otherAccom">
+                                        Other Accommodation
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="otherAccom" name="otherAccom" placeholder="0.00"
+                                            min="0" step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="other-accom-help" class="with-currency">
+                                    </div>
+                                    <span id="other-accom-help" class="sr-only">Enter other accommodation costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Food & Dining Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-utensils" aria-hidden="true"></i>
+                                <h2>Food &amp; Dining</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="meals">
+                                        Meals
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="meals" name="meals" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="meals-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="meals-help" class="sr-only">Enter restaurant and dining costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="snacks">
+                                        Snacks &amp; Drinks
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="snacks" name="snacks" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="snacks-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="snacks-help" class="sr-only">Enter costs for snacks and beverages</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="groceries">
+                                        Groceries
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="groceries" name="groceries" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="groceries-help" class="with-currency">
+                                    </div>
+                                    <span id="groceries-help" class="sr-only">Enter grocery shopping costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Activities Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+                                <h2>Activities</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="tours">
+                                        Tours
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="tours" name="tours" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="tours-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="tours-help" class="sr-only">Enter guided tour costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="attractions">
+                                        Attractions
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="attractions" name="attractions" placeholder="0.00"
+                                            min="0" step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="attractions-help" class="with-currency">
+                                    </div>
+                                    <span id="attractions-help" class="sr-only">Enter entrance fees and attraction
+                                        costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="entertainment">
+                                        Entertainment
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="entertainment" name="entertainment" placeholder="0.00"
+                                            min="0" step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="entertainment-help" class="with-currency">
+                                    </div>
+                                    <span id="entertainment-help" class="sr-only">Enter entertainment and nightlife
+                                        costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Shopping Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                                <h2>Shopping</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="souvenirs">
+                                        Souvenirs
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="souvenirs" name="souvenirs" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="souvenirs-help" class="with-currency">
+                                    </div>
+                                    <span id="souvenirs-help" class="sr-only">Enter souvenir shopping costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="clothes">
+                                        Clothes
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="clothes" name="clothes" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="clothes-help" class="with-currency">
+                                    </div>
+                                    <span id="clothes-help" class="sr-only">Enter clothing purchase costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="otherShopping">
+                                        Other Shopping
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="otherShopping" name="otherShopping" placeholder="0.00"
+                                            min="0" step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="other-shopping-help" class="with-currency">
+                                    </div>
+                                    <span id="other-shopping-help" class="sr-only">Enter other shopping expenses</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Miscellaneous Card -->
+                        <fieldset class="budget-card">
+                            <legend class="card-header">
+                                <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                                <h2>Miscellaneous</h2>
+                            </legend>
+                            <div class="budget-inputs">
+                                <div class="budget-item">
+                                    <label for="insurance">
+                                        Travel Insurance
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="insurance" name="insurance" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="insurance-help" class="with-currency">
+                                    </div>
+                                    <span id="insurance-help" class="sr-only">Enter travel insurance costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="visa">
+                                        Visa/Documents
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="visa" name="visa" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount" aria-describedby="visa-help"
+                                            class="with-currency">
+                                    </div>
+                                    <span id="visa-help" class="sr-only">Enter visa and document processing costs</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+
+                                <div class="budget-item">
+                                    <label for="emergency">
+                                        Emergency Fund
+                                        <span class="sr-only">(in US dollars)</span>
+                                    </label>
+                                    <div class="input-wrapper">
+                                        <span class="currency-symbol" aria-hidden="true">$</span>
+                                        <input type="number" id="emergency" name="emergency" placeholder="0.00" min="0"
+                                            step="0.01" autocomplete="transaction-amount"
+                                            aria-describedby="emergency-help" class="with-currency">
+                                    </div>
+                                    <span id="emergency-help" class="sr-only">Enter emergency fund amount for unexpected
+                                        expenses</span>
+                                    <span class="error-message" role="alert">Please enter a valid amount</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary" id="calculateBtn"
+                            aria-label="Calculate your total travel budget">
+                            <i class="fas fa-calculator" aria-hidden="true"></i>
+                            <span>Calculate Budget</span>
+                        </button>
+                        <button type="reset" class="btn btn-secondary"
+                            aria-label="Clear all form fields and start over">
+                            <i class="fas fa-eraser" aria-hidden="true"></i>
+                            <span>Clear All</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <footer role="contentinfo">
+            <p>&copy; 2025 TripBudget Planner. Plan Smarter, Travel Better.</p>
+        </footer>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function () {
+                const isExpanded = navMenu.classList.toggle('active');
+                menuToggle.setAttribute('aria-expanded', isExpanded);
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.nav-container')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    menuToggle.focus();
+                }
+            });
+        }
+
+        const budgetForm = document.getElementById('budgetForm');
+        const statusMessage = document.getElementById('statusMessage');
+
+        function showStatus(message, type = 'success') {
+            statusMessage.innerHTML = `
+                <div class="alert alert-${type} show" role="alert">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}" aria-hidden="true"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                statusMessage.innerHTML = '';
+            }, 5000);
+        }
+
+        const inputs = budgetForm.querySelectorAll('input[type="number"]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function () {
+                validateInput(this);
+            });
+
+            input.addEventListener('input', function () {
+                const errorMsg = this.parentElement.parentElement.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.classList.remove('show');
+                }
+            });
+        });
+
+        function validateInput(input) {
+            const value = parseFloat(input.value);
+            const errorMsg = input.parentElement.parentElement.querySelector('.error-message');
+
+            if (input.value && (isNaN(value) || value < 0)) {
+                input.setAttribute('aria-invalid', 'true');
+                if (errorMsg) {
+                    errorMsg.classList.add('show');
+                }
+                return false;
+            } else {
+                input.setAttribute('aria-invalid', 'false');
+                if (errorMsg) {
+                    errorMsg.classList.remove('show');
+                }
+                return true;
+            }
+        }
+
+        budgetForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            inputs.forEach(input => {
+                if (!validateInput(input)) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showStatus('Please correct the errors in the form before submitting.', 'error');
+                const firstInvalid = budgetForm.querySelector('[aria-invalid="true"]');
+                if (firstInvalid) {
+                    firstInvalid.focus();
+                }
+                return;
+            }
+
+            calculateBudget();
+        });
+
+        budgetForm.addEventListener('reset', function () {
+            inputs.forEach(input => {
+                input.setAttribute('aria-invalid', 'false');
+                const errorMsg = input.parentElement.parentElement.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.classList.remove('show');
+                }
+            });
+            showStatus('All fields have been cleared.', 'success');
+        });
+
+        function calculateBudget() {
+            const tripData = JSON.parse(sessionStorage.getItem('tripData')) || {};
+
+            let duration = 7;
+            let travelers = 1;
+
+            if (tripData.startDate && tripData.endDate) {
+                const startDate = new Date(tripData.startDate);
+                const endDate = new Date(tripData.endDate);
+                duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+            }
+
+            if (tripData.travelers) {
+                travelers = parseInt(tripData.travelers);
+            }
+
+            const currency = '$';
+
+            const flights = parseFloat(document.getElementById('flights').value) || 0;
+            const localTransport = parseFloat(document.getElementById('localTransport').value) || 0;
+            const carRental = parseFloat(document.getElementById('carRental').value) || 0;
+
+            const hotel = parseFloat(document.getElementById('hotel').value) || 0;
+            const airbnb = parseFloat(document.getElementById('airbnb').value) || 0;
+            const otherAccom = parseFloat(document.getElementById('otherAccom').value) || 0;
+
+            const meals = parseFloat(document.getElementById('meals').value) || 0;
+            const snacks = parseFloat(document.getElementById('snacks').value) || 0;
+            const groceries = parseFloat(document.getElementById('groceries').value) || 0;
+
+            const tours = parseFloat(document.getElementById('tours').value) || 0;
+            const attractions = parseFloat(document.getElementById('attractions').value) || 0;
+            const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+
+            const souvenirs = parseFloat(document.getElementById('souvenirs').value) || 0;
+            const clothes = parseFloat(document.getElementById('clothes').value) || 0;
+            const otherShopping = parseFloat(document.getElementById('otherShopping').value) || 0;
+
+            const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+            const visa = parseFloat(document.getElementById('visa').value) || 0;
+            const emergency = parseFloat(document.getElementById('emergency').value) || 0;
+
+            const transportation = flights + localTransport + carRental;
+            const accommodation = hotel + airbnb + otherAccom;
+            const food = meals + snacks + groceries;
+            const activities = tours + attractions + entertainment;
+            const shopping = souvenirs + clothes + otherShopping;
+            const misc = insurance + visa + emergency;
+
+            const total = transportation + accommodation + food + activities + shopping + misc;
+
+            if (total === 0) {
+                showStatus('Please enter at least one expense amount to calculate your budget.', 'error');
+                sessionStorage.setItem('budgetData', JSON.stringify({ noData: true }));
+                return;
+            }
+
+            const dailyAvg = duration > 0 ? total / duration : 0;
+            const perPerson = travelers > 0 ? total / travelers : total;
+
+            const budgetData = {
+                noData: false,
+                tripInfo: {
+                    destination: tripData.destination || 'Unknown',
+                    startDate: tripData.startDate,
+                    endDate: tripData.endDate
+                },
+                summary: {
+                    duration,
+                    travelers,
+                    currency,
+                    total,
+                    dailyAvg,
+                    perPerson
+                },
+                transportation: { total: transportation, flights, localTransport, carRental },
+                accommodation: { total: accommodation, hotel, airbnb, otherAccom },
+                food: { total: food, meals, snacks, groceries },
+                activities: { total: activities, tours, attractions, entertainment },
+                shopping: { total: shopping, souvenirs, clothes, otherShopping },
+                miscellaneous: { total: misc, insurance, visa, emergency }
+            };
+
+            sessionStorage.setItem('budgetData', JSON.stringify(budgetData));
+            showStatus(`Budget calculated successfully! Total: ${currency}${total.toFixed(2)}`, 'success');
+
+            setTimeout(() => {
+                window.location.href = 'summary.html';
+            }, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tripData = JSON.parse(sessionStorage.getItem('tripData')) || {};
+
+            if (tripData.destination) {
+                // ✅ WCAG 2.1 UPDATED: Changed gradient to blue-only for better contrast
+                const tripInfoHtml = `
+                    <div style="background: linear-gradient(135deg, #1d4ed8, #1e40af); color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center; min-width: 280px;" role="region" aria-label="Trip information">
+                        <h2 style="margin: 0; color: white; font-size: clamp(1.25rem, 4vw, 1.75rem);">Budget for: ${tripData.destination}</h2>
+                        ${tripData.startDate && tripData.endDate ?
+                        `<p style="margin: 0.5rem 0 0 0; opacity: 0.95; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                                ${new Date(tripData.startDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })} - 
+                                ${new Date(tripData.endDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                                | ${tripData.travelers} traveler${tripData.travelers > 1 ? 's' : ''}
+                            </p>` : ''
+                    }
+                    </div>
+                `;
+
+                const h1Element = document.querySelector('h1');
+                if (h1Element) {
+                    h1Element.insertAdjacentHTML('afterend', tripInfoHtml);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

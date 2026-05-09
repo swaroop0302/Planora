@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Accessible travel booking website with color-blind friendly design">
+    <title>Planora - Your Dream Vacation Awaits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header & Navigation -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="logo">
+                <a href="#">Plan<span>ora</span></a>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#destinations" class="nav-link">Destinations</a></li>
+                <li><a href="index.html#about" class="nav-link">About Us</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+
+                <!-- Dashboard and Logout will be added dynamically by auth.js -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home" role="region" aria-label="Hero banner">
+        <div class="hero-content">
+            <h1>Explore the World with Us</h1>
+            <p>Discover amazing destinations and create unforgettable memories</p>
+            <a href="#" class="btn btn-primary btn-plan-trip" aria-label="Book your travel package"
+                onclick="handlePlanTrip(event)">Plan trip</a>
+        </div>
+        <div class="hero-overlay"></div>
+        <video autoplay muted loop class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-traveling-to-the-beach-3298-large.mp4"
+                type="video/mp4">
+        </video>
+    </section>
+
+    <!-- Welcome Text Section -->
+    <section class="welcome-text">
+        <div class="container">
+            <div class="welcome-content">
+                <h2>Welcome to Travel Explorer</h2>
+                <p>Your trusted partner in seamless and memorable travel experiences. We specialize in crafting
+                    personalized journeys that blend comfort, adventure, and efficiency. Whether for business or
+                    leisure, we ensure every trip is planned with care and precision. <strong>Let us turn your travel
+                        dreams into reality.</strong></p>
+            </div>
+        </div>
+    </section>
+    <!-- Destinations Section -->
+    <section class="destinations" id="destinations">
+        <div class="container">
+            <h2 class="section-title">Top Destinations</h2>
+            <div class="destination-grid">
+
+                <!-- Destination 1 -->
+                <a href="destinations.html" class="destination-card" aria-label="View details about Paris, France">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&h=400&fit=crop&q=80"
+                            alt="kerala">
+                    </div>
+                    <div class="card-content">
+                        <h3>kerala</h3>
+                    </div>
+                </a>
+
+                <!-- Destination 2 -->
+                <a href="destinations.html" class="destination-card" aria-label="View details about Tokyo, Japan">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&h=400&fit=crop&q=80"
+                            alt="Tamil Nadu">
+                    </div>
+                    <div class="card-content">
+                        <h3>Tamil Nadu</h3>
+                    </div>
+                </a>
+
+                <!-- Destination 3 -->
+                <a href="destinations.html" class="destination-card" aria-label="View details about Santorini, Greece">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&h=400&fit=crop&q=80"
+                            alt="goa">
+                    </div>
+                    <div class="card-content">
+                        <h3>goa</h3>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- More Details Button -->
+            <div class="destinations-btn-wrapper" style="text-align:center; margin-top: 30px;">
+                <a href="destinations.html" class="btn btn-primary" aria-label="View all destinations">More Details</a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <!-- What We Offer Section -->
+    <section class="services" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What We Offer</h2>
+                <p class="section-subtitle">Discover our best services designed to make your journey unforgettable.</p>
+            </div>
+            <div class="services-grid">
+
+
+
+
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h3><span class="service-number">1.</span> Tour Packages</h3>
+                    <p>Discover curated travel packages that include flights, hotels, and exciting activities.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3><span class="service-number">2.</span> Travel Insurance</h3>
+                    <p>Travel with peace of mind knowing you're protected against unexpected events.</p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card">
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3><span class="service-number">3.</span> 24/7 Support</h3>
+                    <p>Our dedicated support team is available round the clock to assist you during your journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us" id="why-choose-us">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <p class="section-subtitle">We go beyond travel planning to make every journey effortless and
+                    unforgettable.</p>
+            </div>
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h3>Expert Guidance</h3>
+                    <p>Our travel experts with years of experience will help you plan the perfect itinerary tailored to
+                        your preferences and budget.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <h3>Best Price Guarantee</h3>
+                    <p>We offer the most competitive rates in the market. Found a better deal? We'll match it and give
+                        you an extra 5% off!</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-suitcase-rolling"></i>
+                    </div>
+                    <h3>Customized Packages</h3>
+                    <p>Your journey, your way. We create personalized travel experiences that match your unique
+                        interests and style.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Travelers Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-slide active">
+                    <div class="testimonial-content">
+                        <p>"The European tour was absolutely amazing! Everything was well-organized and we saw so many
+                            beautiful places. Highly recommended!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson">
+                            <div>
+                                <h4>Sarah Johnson</h4>
+                                <span>Traveled to Europe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-slide">
+                    <div class="testimonial-content">
+                        <p>"Best travel experience ever! The guides were knowledgeable and the itinerary was perfect.
+                            Can't wait for my next adventure with TravelExplorer!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Michael Chen">
+                            <div>
+                                <h4>Michael Chen</h4>
+                                <span>Traveled to Asia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-prev" aria-label="Previous testimonial"><i class="fas fa-chevron-left"
+                            aria-hidden="true"></i></button>
+                    <div class="slider-dots" role="tablist" aria-label="Testimonial navigation">
+                        <span class="dot active" data-slide="0" role="tab" aria-label="Testimonial 1"
+                            aria-selected="true"></span>
+                        <span class="dot" data-slide="1" role="tab" aria-label="Testimonial 2"
+                            aria-selected="false"></span>
+                    </div>
+                    <button class="slider-next" aria-label="Next testimonial"><i class="fas fa-chevron-right"
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter" id="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Get Travel Updates & Deals</h2>
+                <p class="service-guarantee">We are truly a service-driven company that not only offers statements about
+                    our service levels—we guarantee them.</p>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>TravelExplorer</h3>
+                    <p>Making your travel dreams a reality with unforgettable experiences around the globe.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                        <li><a href="#about">About us</a></li>
+
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div id="contact" class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 MG Road, Koramangala, Bangalore, Karnataka 560034, India</p>
+                    <p><i class="fas fa-phone"></i>+91 80 1234 5678</p>
+                    <p><i class="fas fa-envelope"></i> info@travelexplorer.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TravelExplorer. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>
