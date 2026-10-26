@@ -1,194 +1,139 @@
-# Planora 📋
+# 🌍 Planora — Travel Planning & Itinerary Management System
 
-Planora is a modern web-based project and task management system designed to help users organize tasks, manage workflows, and improve productivity. The platform provides an intuitive interface for planning, tracking, and managing projects efficiently.
+A web-based travel planning application developed using **HTML, CSS, JavaScript, PHP, and MySQL**. Planora helps users organize their trips, create travel itineraries, estimate budgets, and manage their travel plans through a simple and user-friendly interface.
 
----
-
-## 🚀 Features
-
-### 👤 User Features
-
-* User registration and authentication
-* Secure login and logout system
-* Dashboard for managing tasks and projects
-* Create, update, and delete tasks
-* Project tracking and progress monitoring
-* Responsive user interface
-* Task organization and scheduling
-* Simple and user-friendly navigation
-
-### 🛠️ Admin Features
-
-* Admin dashboard
-* User management
-* Project management
-* Task monitoring
-* Database management
-* Activity tracking
+Planora aims to make travel planning easier by bringing essential travel management features together in one platform.
 
 ---
 
-## 🧰 Technologies Used
+## 📑 Table of Contents
 
-### Frontend
-
-* HTML5
-* CSS3
-* JavaScript
-
-### Backend
-
-* PHP
-
-### Database
-
-* MySQL
-
-### Development Environment
-
-* WAMP Server
+- [Tech Stack](#-tech-stack)
+- [Project Overview](#-project-overview)
+- [Project Modules](#-project-modules)
+- [Features](#-features)
+- [How the Project Works](#-how-the-project-works)
+- [System Workflow](#-system-workflow)
+- [Project Objectives](#-project-objectives)
+- [Conclusion](#-conclusion)
 
 ---
 
-## 📂 Project Structure
+## 🛠️ Tech Stack
 
-```text
-planora/
-│
-├── index.php
-├── login.php
-├── registration.php
-├── dashboard.php
-├── project/
-├── assets/
-├── css/
-├── js/
-├── images/
-├── database/
-└── includes/
-```
+| Layer | Technology |
+|-------|------------|
+| Frontend | HTML5 |
+| Styling | CSS3 |
+| Interactivity | JavaScript |
+| Backend | PHP |
+| Database | MySQL |
+| Web Server | Apache (XAMPP / WAMP) |
+| Development Tools | Visual Studio Code |
+| Platform | Web Application |
 
 ---
 
-## ⚙️ Installation Guide
+## 📌 Project Overview
 
-### 1️⃣ Clone Repository
+**Planora** is a travel planning website that allows users to manage their travel activities efficiently.
 
-```bash
-git clone https://github.com/swaroop0302/planora.git
-```
+The application provides features such as trip planning, itinerary organization, budget estimation, and travel management.
 
----
-
-### 2️⃣ Move Project Folder
-
-Move the project folder into:
-
-```text
-C:\wamp64\www\
-```
+It simplifies the travel planning process and helps users keep their trip information organized.
 
 ---
 
-### 3️⃣ Start WAMP Server
+## 🧩 Project Modules
 
-Start the following services:
+### 1. 🏠 Home Module
 
-* Apache
-* MySQL
+- Displays the main landing page of Planora.
+- Provides navigation to different sections.
+- Introduces users to the travel planning platform.
 
----
+### 2. 🔐 User Registration & Login Module
 
-### 4️⃣ Import Database
+- Allows new users to create an account.
+- Provides login functionality for existing users.
+- Manages registered user information.
+- Helps users access their travel planning features.
 
-1. Open phpMyAdmin
-2. Create a new database
-3. Import the SQL file if provided
+### 3. ✈️ Travel Planning Module
 
----
+- Allows users to plan their trips.
+- Helps organize destinations and travel details.
+- Provides a convenient way to manage travel information.
 
-### 5️⃣ Run the Application
+### 4. 📅 Itinerary Management Module
 
-Open browser and run:
+- Helps users organize travel activities.
+- Allows users to plan their trip schedules.
+- Provides an organized view of travel itineraries.
 
-```text
-http://localhost/planora/
-```
+### 5. 💰 Budget Calculator Module
 
----
+- Helps users estimate travel expenses.
+- Calculates the approximate trip budget.
+- Supports better financial planning for travel.
 
-## ✨ Core Functionalities
+### 6. 📊 Dashboard Module
 
-* Project planning
-* Task management
-* Workflow tracking
-* User authentication
-* CRUD operations
-* Database integration
-* Responsive web design
-
----
-
-## 🔐 Authentication System
-
-* User Login
-* User Registration
-* Logout Functionality
-* Session Management
-* Password Protection
+- Provides an overview of travel plans.
+- Displays saved trip information.
+- Helps users manage and access their travel details.
 
 ---
 
-## 📊 Dashboard Modules
+## ✨ Features
 
-* Task Overview
-* Project Tracking
-* User Activity
-* Progress Monitoring
-* Management Controls
-
----
-
-## 📸 Screenshots
-
-The repository may include screenshots and assets demonstrating:
-
-* Login page
-* Registration page
-* Dashboard
-* Project management interface
-* Task management pages
-* Admin panel
+| Feature | Description |
+|---------|-------------|
+| User-Friendly Interface | Simple and attractive website design |
+| User Registration | Allows new users to register |
+| User Login | Provides account access |
+| Travel Planning | Helps users organize trips |
+| Itinerary Management | Organizes travel schedules and activities |
+| Budget Calculator | Estimates travel expenses |
+| Travel Dashboard | Displays trip information |
+| Saved Trips | Helps users access their travel plans |
+| Database Integration | Uses MySQL for storing relevant information |
+| Interactive Website | Uses JavaScript for interactive functionality |
 
 ---
 
-## 🎯 Learning Objectives
+## ⚙️ How the Project Works
 
-This project demonstrates:
-
-* Full-stack web development
-* PHP and MySQL integration
-* CRUD operations
-* Session handling
-* Authentication systems
-* Responsive frontend development
-* Database connectivity
-* Project management workflow systems
+1. The user opens the **Planora** website.
+2. The homepage displays the available travel planning features.
+3. New users can register, while existing users can log in.
+4. Users can access the travel planning section.
+5. Users enter their travel details and organize their itineraries.
+6. The budget calculator helps estimate the total travel expenses.
+7. Travel plans can be saved and accessed through the dashboard.
+8. PHP handles backend operations, while MySQL stores relevant information.
 
 ---
 
-## 👨‍💻 Author
+## 🔄 System Workflow
 
-**Swaroop**
-
-GitHub Profile:
-[https://github.com/swaroop0302](https://github.com/swaroop0302)
-
-Project Repository:
-[https://github.com/swaroop0302/planora](https://github.com/swaroop0302/planora)
+**Home Page → Registration / Login → Dashboard → Travel Planning → Itinerary Management → Budget Calculation → Save Trip → View Travel Plans**
 
 ---
 
-## 📄 License
+## 🎯 Project Objectives
 
-This project is developed for educational and academic purposes.
+- To develop a simple and efficient travel planning website.
+- To help users organize their trips in one platform.
+- To provide itinerary planning and management.
+- To help users estimate travel expenses.
+- To simplify the process of managing travel information.
+- To create a user-friendly and interactive travel management system.
+
+---
+
+## 📝 Conclusion
+
+**Planora** is a web-based travel planning and itinerary management system developed using HTML, CSS, JavaScript, PHP, and MySQL.
+
+The project combines travel planning, itinerary management, budget calculation, and trip management into a single platform. It provides an organized and convenient way for users to plan and manage their travel experiences.
